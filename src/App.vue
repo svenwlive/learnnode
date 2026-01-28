@@ -9,6 +9,7 @@ import { computed, ref } from 'vue';
     let newItem = ref('');
 
     let doneItems = computed(() => items.value.filter(i => i.isDone));
+    let todoItems = computed(() => items.value.filter(i => !i.isDone));
 
 function add() {
     if(newItem.value.trim() != '') {
@@ -43,6 +44,15 @@ function add() {
             <h1>Done Items</h1>
             <ul>
                 <li v-for="item in doneItems">
+                    {{ item.text }}
+                    <input type="checkbox" v-model="item.isDone">
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>ToDo Items</h1>
+            <ul>
+                <li v-for="item in todoItems">
                     {{ item.text }}
                     <input type="checkbox" v-model="item.isDone">
                 </li>
