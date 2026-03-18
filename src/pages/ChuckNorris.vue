@@ -12,12 +12,17 @@
     // req.addEventListener("load", reqListener);
     // req.open("GET", "https://api.chucknorris.io/jokes/random");
     // req.send();
-    let req = fetch("https://api.chucknorris.io/jokes/random").then(res => {
-        return res.json();
-    }).then(data => {
-        joke.value = data.value;
-    });
-    
+
+    // let req = fetch("https://api.chucknorris.io/jokes/random").then(res => {
+    //     return res.json();
+    // }).then(data => {
+    //     joke.value = data.value;
+    // });
+
+    let res = await fetch("https://api.chucknorris.io/jokes/random");
+    let data = await res.json();
+    joke.value = data.value;
+
 </script>
 
 <template>
