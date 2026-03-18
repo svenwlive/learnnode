@@ -1,5 +1,6 @@
 <script setup>
     import { ref } from 'vue';
+    import axios from 'axios';
 
     let joke = ref('')
     // function reqListener() {
@@ -19,9 +20,13 @@
     //     joke.value = data.value;
     // });
 
-    let res = await fetch("https://api.chucknorris.io/jokes/random");
-    let data = await res.json();
-    joke.value = data.value;
+    // let res = await fetch("https://api.chucknorris.io/jokes/random");
+    // let data = await res.json();
+    // joke.value = data.value;
+
+    let res = await axios.get("https://api.chucknorris.io/jokes/random");
+    let data = await res.data;
+    joke.value = res.data.value;
 
 </script>
 
