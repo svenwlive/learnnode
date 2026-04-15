@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import CharacterCard from '../components/CharacterCard.vue';
 
 let characters = ref([]);
@@ -32,6 +32,11 @@ async function getCharacters(page) {
     characters.value = res.data.results;
     pagination.value = res.data.info;
 }
+
+const filters = reactive({
+  status: '',
+  gender: ''
+});
 
 
 async function next() {
