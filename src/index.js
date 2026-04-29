@@ -9,6 +9,7 @@ import Validation from './pages/Validation.vue';
 import ChuckNorris from './pages/ChuckNorris.vue';
 import RickAndMorty from './pages/RickAndMorty.vue';
 import canvas from './pages/CanvasExample.vue';
+import WebApis from './pages/WebApis.vue';
 
 
 const routes = [
@@ -19,6 +20,7 @@ const routes = [
   { path: '/chuck', component: ChuckNorris, name: 'Chuck Norris' },
   { path: '/rickandmorty', component: RickAndMorty, name: 'Rick and Morty' },
   { path: '/canvas', component: canvas, name: 'canvas' },
+  { path: '/webapis', component: WebApis, name: 'Web APIs' }
 ];
 
 export const router = createRouter({
