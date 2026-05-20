@@ -11,6 +11,7 @@ import RickAndMorty from './pages/RickAndMorty.vue';
 import canvas from './pages/CanvasExample.vue';
 import WebApis from './pages/WebApis.vue';
 import Leaflet from './pages/Leaflet.vue';
+import Chat from './pages/Chat.vue';
 
 
 const routes = [
@@ -22,7 +23,8 @@ const routes = [
   { path: '/rickandmorty', component: RickAndMorty, name: 'Rick and Morty' },
   { path: '/canvas', component: canvas, name: 'canvas' },
   { path: '/webapis', component: WebApis, name: 'Web APIs' },
-  { path: '/leaflet', component: Leaflet, name: 'Leaflet' }
+  { path: '/leaflet', component: Leaflet, name: 'Leaflet' },
+  { path: '/chat', component: Chat, name: 'Chat' },
 ];
 
 export const router = createRouter({
