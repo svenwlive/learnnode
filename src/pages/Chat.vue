@@ -12,25 +12,38 @@ let messages = ref([
 ]);
 let message = ref('');
 
-function joinChat() {
+async function joinChat() {
     nameSet.value = true;
-    setInterval(() => {
-        axios.get('http://localhost:8080/api/messages').then(res => {
-            messages.value = res.data.map(m => ({ ...m, isMe: m.name === name.value }));
-        });
-    }, 1000);
+        
     axios.get('http://localhost:8080/api/messages').then(res => {
-        messages.value = res.data.map(m => ({ ...m, isMe: m.name === name.value }));
+        messages.value.push(...res.data.map(m => ({ ...m, isMe: m.name === name.value })));
     });
+    while (true) {
+        let params = {};
+        if (messages.value.length !== 0) {
+            params.date = new Date(messages.value[messages.value.length - 1].created).toISOString();
+        }
+        
+        try {   
+            let res = await axios.get('http://localhost:8080/api/messages', {
+                params: params
+            })
+            messages.value.push(...res.data.map(m => ({ ...m, isMe: m.name === name.value })));
+        } catch (e) {
+           
+            continue;
+        }
+       
+    }
 }
 
 function send() {
-    messages.value.push({
-        id: messages.value.length + 1,
-        text: message.value,
-        isMe: true,
-        name: name.value,
-    });
+    // messages.value.push({
+    //     id: messages.value.length + 1,
+    //     text: message.value,
+    //     isMe: true,
+    //     name: name.value,
+    // });
     axios.post('http://localhost:8080/api/messages', {
         text: message.value,
         name: name.value,

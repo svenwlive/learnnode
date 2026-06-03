@@ -1,7 +1,7 @@
 const messages = [
-    { id: 1, text: "mreow", name: "svenw" },
-    { id: 2, text: "nya", name: "svenw" },
-    { id: 3, text: ":3", name: "svenw" },
+    { id: 1, text: "mreow", name: "svenw", created: new Date().toISOString() },
+    { id: 2, text: "nya", name: "svenw", created: new Date().toISOString() },
+    { id: 3, text: ":3", name: "svenw", created: new Date().toISOString() },
 ]
 
 let headers = {
@@ -10,8 +10,10 @@ let headers = {
     "Access-Control-Allow-Headers": "Content-Type",
 };
 
-const server = Bun.serve({
+let sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+const server = Bun.serve({
+    idleTimeout: 0,
     port: 8080,
     // `routes` requires Bun v1.2.3+
     routes: {
@@ -20,7 +22,18 @@ const server = Bun.serve({
                 return new Response(null, { headers: headers });
             },
             GET: async req => {
-                return Response.json(messages, { headers: headers });
+                let filteredMessages = [];
+                do {
+                    const url = new URL(req.url);
+                    const date = url.searchParams.get("date") ?? new Date(0).toISOString();
+                    let dateObj = new Date(date);
+                    filteredMessages = messages.filter(m => new Date(m.created) > dateObj);
+                    if(filteredMessages.length === 0) {
+                        await sleep(1000);
+                    }
+                } while (filteredMessages.length === 0);
+                
+                return Response.json(filteredMessages, { headers: headers });
             },
             POST: async req => {
                 let data = await req.json();
